@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="UsefulPlantsCatalog.View.PlantIcon"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UsefulPlantsCatalog.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="150">
+    <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Margin="5">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70*" />
+                <RowDefinition Height="30*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Image Grid.Row="0" Source="{Binding UrlPhoto}" Stretch="Fill"/>
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center">
+                <TextBlock Text="{Binding FolkName}" TextAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding ScienceName}" TextAlignment="Center" TextWrapping="Wrap"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>

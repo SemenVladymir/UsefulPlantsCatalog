@@ -6,20 +6,29 @@
              xmlns:local="clr-namespace:UsefulPlantsCatalog.View"
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="400">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50*" />
-            <RowDefinition Height="50*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40*" />
-            <ColumnDefinition Width="60*" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
-        <Image Grid.Column="0" Grid.Row="0" Source="{Binding Path=UrlPhoto}"/>
-        <StackPanel>
-            
-        </StackPanel>
-    </Grid>
+
+    <Border BorderThickness="1" BorderBrush="Gray" Margin="5" >
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50*" />
+                <RowDefinition Height="50*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40*" />
+                <ColumnDefinition Width="60*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Grid.Row="0" Source="{Binding Path=UrlPhoto}"/>
+            <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">
+                <TextBlock Text="FolkName" FontWeight="Bold" TextAlignment="Center"/>
+                <TextBlock Text="ScienceName" FontWeight="Bold"/>
+                <TextBlock Text="GrowthRegion" />
+            </StackPanel>
+            <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
+                <TextBlock />
+                <TextBlock  TextWrapping="Wrap" Text="{Binding Path=Description}"/>
+            </StackPanel>
+        </Grid>
+    </Border>
 </UserControl>
