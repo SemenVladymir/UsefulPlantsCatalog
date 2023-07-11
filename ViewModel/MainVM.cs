@@ -1,4 +1,5 @@
-﻿using Pharmacy.Model;
+﻿using GalaSoft.MvvmLight.Command;
+using Pharmacy.Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -13,11 +14,40 @@ namespace UsefulPlantsCatalog.ViewModel
     public class MainVM : INotifyPropertyChanged
     {
         private ObservableCollection<Plant> plants;
-        public List<PlantIcon> icons = new List<PlantIcon>();
+        public ObservableCollection<PlantIcon> icons = new ObservableCollection<PlantIcon>();
         private Plant selectedPlant;
         private PlantIcon selectedIcon;
+        private string searchName;
 
-        public List<PlantIcon> Icons
+        public string SearchName
+        {
+            get 
+            {
+                SelectPlants(searchName);
+                return searchName; 
+            }
+            set { searchName = value; OnPropertyChanged("SearchName"); }
+        }
+
+        //private RelayCommand search;
+        //public RelayCommand Search
+        //{
+        //    get
+        //    {
+        //        if (search == null)
+        //            search = new RelayCommand(Action);
+
+        //        return search;
+        //    }
+        //}
+
+        //public void Action()
+        //{
+        //    if (!string.IsNullOrEmpty(searchName))
+        //        SelectPlants(false, searchName);
+        //}
+
+        public ObservableCollection<PlantIcon> Icons
         {
             get { return icons; }
             set { icons = value; OnPropertyChanged("Icons"); }
@@ -30,7 +60,11 @@ namespace UsefulPlantsCatalog.ViewModel
 
         public Plant SelectedPlant
         {
-            get {return selectedPlant;}
+            get 
+            {
+                OpenInformWindow();
+                return selectedPlant;
+            }
             set { selectedPlant = value; OnPropertyChanged("SelectedPlant"); }
         }
 
@@ -51,20 +85,49 @@ namespace UsefulPlantsCatalog.ViewModel
         {
             using (BDContext context = new BDContext())
             {
-               Plants = new ObservableCollection<Plant>(context.CatalogOfPlants.ToList());
+               Plants = new ObservableCollection<Plant>(context.CatalogOfPlants.ToList().OrderBy(i => i.FolkName));
                 
                 foreach (var item in Plants)
                     Icons.Add(new PlantIcon{ UrlPhoto = item.UrlPhoto ?? "", FolkName=item.FolkName, ScienceName=item.ScienceName ?? ""});
-              
+                selectedPlant = Plants[0];
             }
         }
 
-        public void AddItemsToWrapPanel()
+        public void SelectPlants(string searchName)
         {
-            
-            WrapPanel wrapPanel = new WrapPanel();
-            PlantIcon plantIcon = new PlantIcon();
+            using (BDContext context = new BDContext())
+            {
+                if (!string.IsNullOrEmpty(searchName))
+                {
+                    Plants.Clear();
+                    Plants = new ObservableCollection<Plant>(context.CatalogOfPlants.Where(c => c.FolkName.Contains(searchName) || c.ScienceName.Contains(searchName)
+                    || c.Description.Contains(searchName) || c.PositiveProp.Contains(searchName) || c.NegativeProp.Contains(searchName)).ToList().OrderBy(i => i.FolkName));
+                }
+                else
+                { 
+                    Plants.Clear();
+                    Plants = new ObservableCollection<Plant>(context.CatalogOfPlants.ToList().OrderBy(i => i.FolkName));
+                }
+                    
+            }
+            Icons.Clear();
+            if (Plants.Count > 0)
+            {
+                selectedPlant = Plants[0];
+                foreach (var item in Plants)
+                    Icons.Add(new PlantIcon { UrlPhoto = item.UrlPhoto ?? "", FolkName = item.FolkName, ScienceName = item.ScienceName ?? "" });
+            }
+        }
 
+        public void OpenInformWindow()
+        {
+            NewWindow newWindow = new NewWindow();
+            PlantCard card = new PlantCard();
+            card.DataContext = selectedPlant;
+            newWindow.Content = card;
+            if (selectedPlant != null)
+                newWindow.Title = $"{selectedPlant.FolkName} ({selectedPlant.ScienceName})";
+            newWindow.Show();
         }
     }
 }

@@ -1,11 +1,10 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 
 namespace UsefulPlantsCatalog.View
 {
-    public partial class PlantCard : UserControl
+    public partial class NewWindow : Window
     {
-        public PlantCard()
+        public NewWindow()
         {
             InitializeComponent();
         }

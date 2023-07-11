@@ -6,18 +6,44 @@
              xmlns:local="clr-namespace:UsefulPlantsCatalog.View"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="150">
-    <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Margin="5">
+    <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="5" Margin="5" Background="WhiteSmoke" RenderTransformOrigin=".95 .95">
+        <Border.Effect>
+            <DropShadowEffect x:Name="Earth_Shadow">
+                <DropShadowEffect.BlurRadius>15</DropShadowEffect.BlurRadius>
+                <DropShadowEffect.Opacity>0.9</DropShadowEffect.Opacity>
+                <DropShadowEffect.Direction>0</DropShadowEffect.Direction>
+            </DropShadowEffect>
+        </Border.Effect>
+        <Border.RenderTransform>
+            <ScaleTransform ScaleX=".95" ScaleY=".95"/>
+        </Border.RenderTransform>
+        <Border.Triggers>
+            <EventTrigger RoutedEvent="MouseEnter" >
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" To="1" Duration="0:0:.4"/>
+                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="1" Duration="0:0:.4"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="MouseLeave" >
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" To=".95" Duration="0:0:.4"/>
+                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To=".95" Duration="0:0:.4"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <!--<EventTrigger RoutedEvent="MouseDown"></EventTrigger>-->
+        </Border.Triggers>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="70*" />
-                <RowDefinition Height="30*" />
+                <RowDefinition Height="90*" />
+                <RowDefinition Height="10*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Image Grid.Row="0" Source="{Binding UrlPhoto}" Stretch="Fill"/>
-            <StackPanel Grid.Row="1" HorizontalAlignment="Center">
-                <TextBlock Text="{Binding FolkName}" TextAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"/>
-                <TextBlock Text="{Binding ScienceName}" TextAlignment="Center" TextWrapping="Wrap"/>
-            </StackPanel>
+            <Image x:Name="PlantImage" Grid.Row="0" Source="{Binding UrlPhoto}" Stretch="Fill"/>
+            <TextBlock Grid.Row="1" Text="{Binding Path=FolkName}" TextAlignment="Center" FontWeight="Bold" TextWrapping="Wrap" Panel.ZIndex="1"/>
         </Grid>
     </Border>
 </UserControl>

@@ -6,12 +6,11 @@
              xmlns:local="clr-namespace:UsefulPlantsCatalog.View"
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="400">
-
     <Border BorderThickness="1" BorderBrush="Gray" Margin="5" >
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50*" />
-                <RowDefinition Height="50*" />
+                <RowDefinition Height="40*" />
+                <RowDefinition Height="60*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -20,15 +19,30 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Image Grid.Column="0" Grid.Row="0" Source="{Binding Path=UrlPhoto}"/>
-            <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">
-                <TextBlock Text="FolkName" FontWeight="Bold" TextAlignment="Center"/>
-                <TextBlock Text="ScienceName" FontWeight="Bold"/>
-                <TextBlock Text="GrowthRegion" />
+            <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left">
+                <StackPanel Orientation="Horizontal" Margin="0 5">
+                    <TextBlock Text="Народна назва: " FontWeight="Bold" FontSize="17"/>
+                    <TextBox Text="{Binding Path=FolkName}" IsReadOnly="True" BorderBrush="White"  FontSize="17"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 5">
+                    <TextBlock Text="Наукова назва: " FontWeight="Bold"  FontSize="17"/>
+                    <TextBox Text="{Binding Path=ScienceName}" IsReadOnly="True" BorderBrush="White"  FontSize="17"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 5">
+                    <TextBlock Text="Регіон розповсюдження: " FontWeight="Bold"  FontSize="17"/>
+                    <TextBox Text="{Binding Path=GrowthRegion}" TextWrapping="Wrap" IsReadOnly="True" BorderBrush="White"  FontSize="17"/>
+                </StackPanel>
             </StackPanel>
-            <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
-                <TextBlock />
-                <TextBlock  TextWrapping="Wrap" Text="{Binding Path=Description}"/>
+            <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 10 0 0">
+            <StackPanel >
+                <TextBlock Text="ОПИС" HorizontalAlignment="Center" FontSize="19" Margin="0 10"/>
+                <TextBox  TextWrapping="Wrap" Text="{Binding Path=Description}" IsReadOnly="True" BorderBrush="White" FontSize="16"/>
+                    <TextBlock Text="ПОЗИТИВНІ ВЛАСТИВОСТІ" HorizontalAlignment="Center" FontSize="19" Margin="0 10"/>
+                <TextBox  TextWrapping="Wrap" Text="{Binding Path=PositiveProp}" IsReadOnly="True" BorderBrush="White" FontSize="16"/>
+                    <TextBlock Text="НЕГАТИВНІ ВЛАСТИВОСТІ" HorizontalAlignment="Center" FontSize="19" Margin="0 10"/>
+                <TextBox  TextWrapping="Wrap" Text="{Binding Path=NegativeProp}" IsReadOnly="True" BorderBrush="White" FontSize="16"/>
             </StackPanel>
+            </ScrollViewer>
         </Grid>
     </Border>
 </UserControl>

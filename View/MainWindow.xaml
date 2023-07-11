@@ -6,9 +6,10 @@
         xmlns:local="clr-namespace:UsefulPlantsCatalog"
         xmlns:uc="clr-namespace:UsefulPlantsCatalog.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="650" Width="1050">
+        Title="Каталог користних рослин України" Height="650" Width="1110">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
             <RowDefinition Height="50" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
@@ -20,24 +21,29 @@
         </Grid.ColumnDefinitions>
         <Border Background="AliceBlue" BorderBrush="Blue" BorderThickness="2" CornerRadius="5" Grid.ColumnSpan="2" Margin="5">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-                <TextBox x:Name="Search" Width="250" Height="30" Margin="30 0"/>
-                <Button Content="Search" Height="30" Width="100" Margin="30 0"/>
-                <ToggleButton IsChecked="True" Width="50" Height="30" Margin="30 0"/>
+                <TextBox Text="{Binding Path=SearchName, UpdateSourceTrigger=PropertyChanged}" Width="350" Height="20" Margin="30 0"/>
+                <!--<Button Content="Пошук" Height="20" Width="100" Margin="30 0" Command="{Binding Search}"/>-->
+                <ToggleButton IsChecked="True" Width="50" Height="20" Margin="30 0"/>
             </StackPanel>
         </Border>
 
-        <Border Background="Aquamarine" BorderBrush="Blue" BorderThickness="2" CornerRadius="5" Grid.Row="1" Margin="5">
-            <!--<Label Content="Алфавітний перелік" HorizontalAlignment="Center"/>-->
+        <Label Content="Алфавітний перелік" HorizontalAlignment="Center" Grid.Row="1" FontSize="19"/>
+        <Border Background="Aquamarine" BorderBrush="Blue" BorderThickness="2" CornerRadius="5" Grid.Row="2" Margin="5">
             <ListBox  Grid.Row="2" ItemsSource="{Binding Plants}" SelectedItem="{Binding SelectedPlant}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Path=FolkName}" FontWeight="Bold" Margin="5, 3"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Path=FolkName}" FontWeight="Bold" Margin="5, 3"/>
+                            <TextBlock Text=" (" Margin="0, 3"/>
+                            <TextBlock Text="{Binding Path=ScienceName}" Margin="0, 3"/>
+                            <TextBlock Text=")" Margin="0, 3"/>
+                        </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
         </Border>
 
-        <Border Background="Aquamarine" BorderBrush="Blue" BorderThickness="2" CornerRadius="5" Grid.Row="1" Grid.Column="1" Margin="5">
+        <Border  BorderBrush="Blue" BorderThickness="2" CornerRadius="5" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Margin="5">
             <ScrollViewer >
                 <ItemsControl ItemsSource="{Binding Icons}">
                     <ItemsControl.ItemsPanel>
