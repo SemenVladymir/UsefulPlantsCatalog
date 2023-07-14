@@ -56,8 +56,8 @@
                     <TextBlock Text="НЕГАТИВНІ ВЛАСТИВОСТІ" Style="{DynamicResource TxtBlockCardChapter}"/>
                     <TextBox  x:Name="NegProp" TextWrapping="Wrap" Text="{Binding Path=NegativeProp}" IsReadOnly="True" Style="{DynamicResource TxtBoxCard}"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Cursor="">
-                        <Button x:Name="btnSave" Margin="150 10" Content="Зберегти" Click="btnSave_Click"/>
-                        <Button x:Name="btnDelete" Margin="150 10" Content="Видалити" Click="btnDelete_Click"/>
+                        <Button x:Name="btnSave" Margin="150 10" Content="Зберегти" Click="btnSave_Click" Visibility="Collapsed"/>
+                        <Button x:Name="btnDelete" Margin="150 10" Content="Видалити" Click="btnDelete_Click" Visibility="Collapsed"/>
                     </StackPanel>
                 </StackPanel>
             </ScrollViewer>

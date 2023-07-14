@@ -59,6 +59,7 @@
     <Style x:Key="TxtBlockHead" TargetType="TextBlock">
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontWeight" Value="Bold"/>
     </Style>
     <Style x:Key="TxtBlockCard" TargetType="TextBlock">
         <Setter Property="FontWeight" Value="Bold"/>
