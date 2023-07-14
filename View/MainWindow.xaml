@@ -5,31 +5,54 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UsefulPlantsCatalog"
         xmlns:uc="clr-namespace:UsefulPlantsCatalog.View"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="Каталог користних рослин України" Height="650" Width="1110">
-    <Grid>
+        Title="Каталог користних рослин України" Height="650" Width="1150"
+        Style="{DynamicResource ResourceKey=WindowStyle}">
+
+    <Grid Cursor="">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="0" />
+            <RowDefinition Height="0" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="25*"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="75*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <Border Background="AliceBlue" BorderBrush="Blue" BorderThickness="2" CornerRadius="5" Grid.ColumnSpan="2" Margin="5">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-                <TextBox Text="{Binding Path=SearchName, UpdateSourceTrigger=PropertyChanged}" Width="350" Height="20" Margin="30 0"/>
-                <!--<Button Content="Пошук" Height="20" Width="100" Margin="30 0" Command="{Binding Search}"/>-->
-                <ToggleButton IsChecked="True" Width="50" Height="20" Margin="30 0"/>
+        <Border  Grid.ColumnSpan="3" Style="{DynamicResource ResourceKey=BorderStyleHead}">
+            <TextBlock Text="КАТАЛОГ КОРИСТНИХ РОСЛИН УКРАЇНИ" Style="{DynamicResource ResourceKey=TxtBlockHead}"/>
+        </Border>
+        <Border Grid.Row="1"  Grid.ColumnSpan="3" Style="{DynamicResource ResourceKey=BorderStyleBlue}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="left">
+                <TextBlock Text="Пошук" FontSize="16" Margin="30 8 10 0"/>
+                <TextBox Text="{Binding Path=SearchName, UpdateSourceTrigger=PropertyChanged}" Width="350" Height="30" Margin="30 0"/>
             </StackPanel>
         </Border>
-
-        <Label Content="Алфавітний перелік" HorizontalAlignment="Center" Grid.Row="1" FontSize="19"/>
-        <Border Background="Aquamarine" BorderBrush="Blue" BorderThickness="2" CornerRadius="5" Grid.Row="2" Margin="5">
-            <ListBox  Grid.Row="2" ItemsSource="{Binding Plants}" SelectedItem="{Binding SelectedPlant}">
+        
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right" Margin="0 10 10 0" Panel.ZIndex="1">
+            <TextBlock Text="День" FontSize="16" />
+            <ToggleButton  IsChecked="{Binding IsChecked}" x:Name="LightSwitch" Width="30" Height="20" Margin="10 -5 10 0"/>
+            <TextBlock Text="Нічь" FontSize="16"/>
+            <Button Content="admin" Command="{Binding EnterPass}" Style="{StaticResource MaterialDesignFlatButton}"  Margin="20 -10 0 0" Visibility="{Binding Path=IsVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}" Cursor="Hand"/>
+            <PasswordBox x:Name="Password" Visibility="{Binding Path=IsEnable, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}" Width="80" Margin=" 20 0 0 5">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PasswordChanged">
+                        <i:InvokeCommandAction Command="{Binding SecretKeyChangedCommand}" CommandParameter="{Binding ElementName=Password}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </PasswordBox>
+            <Button x:Name="BtnAdd" Content="Додати рослину" Height="30" Width="140" Margin="10 -9 0 0" Command="{Binding Adding}"
+                    Visibility="{Binding Path=BtnAddStation, Converter={StaticResource BooleanToVisibilityConverter}}" Cursor="Hand"/>
+        </StackPanel>
+        
+        <Border Style="{DynamicResource ResourceKey=BorderStyleWhite}" Grid.Row="4">
+            <ListBox ItemsSource="{Binding Plants}" SelectedItem="{Binding SelectedPlant}" Style="{DynamicResource ResourceKey=ListBoxStyle}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -42,13 +65,13 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </Border>
-
-        <Border  BorderBrush="Blue" BorderThickness="2" CornerRadius="5" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Margin="5">
+        <GridSplitter Grid.Column="1" Grid.Row="4" Width="5" HorizontalAlignment="Stretch"/>
+        <Border  Grid.Row="4" Grid.RowSpan="2" Grid.Column="2" Style="{DynamicResource ResourceKey=BorderStyleWhite}">
             <ScrollViewer >
-                <ItemsControl ItemsSource="{Binding Icons}">
+                <ItemsControl ItemsSource="{Binding Icons, UpdateSourceTrigger=PropertyChanged}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Horizontal"  ItemHeight="200" ItemWidth="200"/>
+                            <WrapPanel Orientation="Horizontal"  ItemHeight="270" ItemWidth="270"/>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>

@@ -1,27 +1,80 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace UsefulPlantsCatalog.Model
 {
-    public class Plant
+    public class Plant : INotifyPropertyChanged
     {
-        public int Id { get; set; }
+        private int id;
 
-        public string FolkName { get; set; } = null!;
+        private string folkName;
 
-        public string? ScienceName { get; set; }
+        private string? scienceName;
 
-        public string? Description { get; set; }
+        private string? description;
 
-        public string? PositiveProp { get; set; }
+        private string? positiveProp;
 
-        public string? NegativeProp { get; set; }
+        private string? negativeProp;
 
-        public string? GrowthRegion { get; set; }
+        private string? growthRegion;
 
-        public string? UrlPhoto { get; set; }
+        private string? urlPhoto;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public int Id
+        {
+            get { return id; }
+            set { id = value; OnPropertyChanged("Id"); }
+        }
+
+        public string FolkName
+        {
+            get { return folkName; }
+            set { folkName = value; OnPropertyChanged("FolkName"); }
+        }
+
+        public string ScienceName
+        {
+            get { return scienceName; }
+            set { scienceName = value; OnPropertyChanged("ScienceName"); }
+        }
+
+        public string Description
+        {
+            get { return description ?? ""; }
+            set { description = value; OnPropertyChanged("Description"); }
+        }
+
+        public string PositiveProp
+        {
+            get { return positiveProp; }
+            set { positiveProp = value; OnPropertyChanged("PositiveProp"); }
+        }
+
+        public string NegativeProp
+        {
+            get { return negativeProp; }
+            set { negativeProp = value; OnPropertyChanged("NegativeProp"); }
+        }
+
+        public string GrowthRegion
+        {
+            get { return growthRegion; }
+            set { growthRegion = value; OnPropertyChanged("GrowthRegion"); }
+        }
+
+        public string UrlPhoto
+        {
+            get { return urlPhoto; }
+            set { urlPhoto = value; OnPropertyChanged("UrlPhoto"); }
+        }
+
+        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
     }
 }

@@ -1,29 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Media.TextFormatting;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using UsefulPlantsCatalog.Model;
 
 namespace UsefulPlantsCatalog.View
 {
-    /// <summary>
-    /// Логика взаимодействия для PlantIcon.xaml
-    /// </summary>
     public partial class PlantIcon : UserControl
     {
         public static readonly DependencyProperty myDepPropertyFolk = DependencyProperty.Register(nameof(FolkName), typeof(string), typeof(UserControl));
         public static readonly DependencyProperty myDepPropertyImg = DependencyProperty.Register(nameof(UrlPhoto), typeof(string), typeof(UserControl));
         public static readonly DependencyProperty myDepPropertyScience = DependencyProperty.Register(nameof(ScienceName), typeof(string), typeof(UserControl));
+        public static readonly DependencyProperty myDepPropertyDescription = DependencyProperty.Register(nameof(Description), typeof(string), typeof(UserControl));
         public string FolkName
         {
             get { return (string)GetValue(myDepPropertyFolk); }
@@ -41,11 +27,28 @@ namespace UsefulPlantsCatalog.View
             get { return (string)GetValue(myDepPropertyScience); }
             set { SetValue(myDepPropertyScience, value); }
         }
+
+        public string Description
+        {
+            get { return (string)GetValue(myDepPropertyDescription); }
+            set { SetValue(myDepPropertyDescription, value); }
+        }
         public PlantIcon()
         {
             InitializeComponent();
             this.DataContext = this;
+            
         }
 
+        private RelayCommand openWindow;
+        public RelayCommand OpenWindow
+        {
+            get
+            {
+                if (openWindow == null)
+                    openWindow = new RelayCommand(obj => { MessageBox.Show($"{FolkName} ({ScienceName})\n{Description}"); });
+                return openWindow;
+            }
+        }
     }
 }
